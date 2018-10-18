@@ -1,3 +1,5 @@
+import copy
+
 # TAI content
 def c_peg ():
     return "O"
@@ -29,14 +31,15 @@ def move_initial (move):
     return move[0]
 def move_final (move):
     return move[1]
+
 #Exemplo de um tabuleiro
 b1 = [["_","O","O","O","_"], ["O","_","O","_","O"], ["_","O","_","O","_"],
 ["O","_","O","_","_"], ["_","O","_","_","_"]]
 
 def board_moves (b1):
     res = []
-    for i in range (0,len(b1)-1):
-        for j in range (0,len(b1[i])-1):   
+    for i in range (0,len(b1)):
+        for j in range (0,len(b1[i])):   
             if is_peg(b1[i][j]):
                 if is_empty(b1[i][j-2]) and is_peg(b1[i][j-1]) :
                     if j-2 >= 0:
@@ -68,12 +71,47 @@ def board_perform_move(b1,pos):
     i_inicial=pos[0][0]
     j_inicial=pos[0][1]
     i_final= pos[1][0]
-    j_final= pos[1][1]  
-    res = b1
-    for i in range (0,len(res)):
-        for j in range (0,len(res[i])):
-            if (i == i_inicial) and (j==j_inicial):
-                res[i][j] = "_"
-            if (i==i_final) and (j==j_final):
-                res[i][j] = "O"
+    j_final= pos[1][1]
+    if (i_inicial == i_final) and (j_final > j_inicial):
+        i_inter = i_inicial
+        j_inter = j_final-1
+    if (i_inicial == i_final) and (j_final < j_inicial):
+        i_inter = i_inicial
+        j_inter = j_final+1
+    if (j_inicial == j_final) and (i_final > i_inicial):
+        j_inter = j_inicial
+        i_inter = i_final-1
+    if (j_inicial == j_final) and (i_final < i_inicial):
+        j_inter = j_inicial
+        i_inter = i_final + 1     
+    res = copy.deepcopy(b1)
+    
+    res[i_inicial][j_inicial] = "_"
+    res[i_final][j_final] = "O"
+    res[i_inter][j_inter] = "_"
     return res
+
+
+class sol_state:
+    def __init__(self, board):
+            self.board = board
+    #def __lt__ (self,sol_state_1):
+            #Heuristic
+
+#class Solitaire(Problem):
+    #Models a Solitaire problem as a satisfaction problem.
+     #A solution cannot have more than 1 peg left on the board.
+     #def __init__(self, board):
+     #…
+     #def actions(self, state):
+     #…
+     #def result(self, state, action):
+     #…
+     #def goal_test(self, state):
+     #…
+     #
+     #def path_cost(self, c, state1, action, state2):
+     #…
+     #def h(self, node):
+     #"""Needed for informed search.        
+
