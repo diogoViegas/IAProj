@@ -1,4 +1,5 @@
 import copy
+from search import *
 
 # TAI content
 def c_peg ():
@@ -91,27 +92,52 @@ def board_perform_move(b1,pos):
     res[i_inter][j_inter] = "_"
     return res
 
+#funcao base da heuristica
+#quanto menor o numero de pecas isoladas -- melhor 
 
+def number_of_iso_pegs(board):
+    counter=0
+    res=[]
+    for i in range (0,len(board)):
+        for j in range (0,len(board[i])):
+            if is_peg(board[i][j]):
+                if (i-1>0 and j-1>0 and i+1 < len(board) and j+1 < len(board[i])):
+                    if (is_empty(board[i][j-1]) or is_blocked(board[i][j-1])) and (is_empty(board[i-1][j]) or is_blocked(board[i-1][j])) and (is_empty(board[i+1][j]) or is_blocked(board[i+1][j])) and (is_empty(board[i][j+1]) or is_blocked(board[i][j+1])):
+                        res.append(tuple((i,j)))
+                        counter+=1
+    return counter                                                                           
+              
+                                                                                                     
+            
 class sol_state:
     def __init__(self, board):
             self.board = board
-    #def __lt__ (self,sol_state_1):
-            #Heuristic
+            self.number_of_iso = number_of_iso_pegs(board)
+    def __lt__ (self,other):
+            return self.number_of_iso < other.number_of_iso
 
-#class Solitaire(Problem):
-    #Models a Solitaire problem as a satisfaction problem.
-     #A solution cannot have more than 1 peg left on the board.
-     #def __init__(self, board):
-     #…
-     #def actions(self, state):
-     #…
-     #def result(self, state, action):
-     #…
-     #def goal_test(self, state):
-     #…
-     #
-     #def path_cost(self, c, state1, action, state2):
-     #…
-     #def h(self, node):
-     #"""Needed for informed search.        
+class solitaire(object):
+        #Models a Solitaire problem as a satisfaction problem.
+        #A solution cannot have more than 1 peg left on the board.
+        def __init__(self, board):
+            super().__init__(sol_state(board))
+                       
+        def actions(self, state):
+            return board_moves(state.board)
+        
+        def result(self, state, action):
+            if action in actions(state):
+                return board_perform_move(state.board, action)
+            
+        def goal_test(self, state):
+            counter=0
+            for i in range(0,len(state.board)):
+                for j in range(0,len(state.board[i])):
+                    if is_peg(state.board[i][j]):
+                        counter+=1
+            if (counter==0):
+                return True
+            
+        #def h(self, node):
+            #"""Needed for informed search.        
 
