@@ -95,24 +95,24 @@ def board_perform_move(b1,pos):
 #funcao base da heuristica
 #quanto menor o numero de pecas isoladas -- melhor 
 
-def number_of_iso_pegs(board):
-    counter=0
-    res=[]
-    for i in range (0,len(board)):
-        for j in range (0,len(board[i])):
-            if is_peg(board[i][j]):
-                if (i-1>0 and j-1>=0 and i+1<len(board) and j+1 <= len(board[i])):
-                    if (is_empty(board[i][j-1]) or is_blocked(board[i][j-1])) and (is_empty(board[i-1][j]) or is_blocked(board[i-1][j])) and (is_empty(board[i+1][j]) or is_blocked(board[i+1][j])) and (is_empty(board[i][j+1]) or is_blocked(board[i][j+1])):
-                        res.append(tuple((i,j)))
-                        counter+=1
-    return res                                                                          
+#def number_of_iso_pegs(board):
+    #counter=0
+    #res=[]
+    #for i in range (0,len(board)):
+        #for j in range (0,len(board[i])):
+            #if is_peg(board[i][j]):
+                #if (i-1>0 and j-1>=0 and i+1<len(board) and j+1 <= len(board[i])):
+                    #if (is_empty(board[i][j-1]) or is_blocked(board[i][j-1])) and (is_empty(board[i-1][j]) or is_blocked(board[i-1][j])) and (is_empty(board[i+1][j]) or is_blocked(board[i+1][j])) and (is_empty(board[i][j+1]) or is_blocked(board[i][j+1])):
+                        #res.append(tuple((i,j)))
+                        #counter+=1
+    #return res                                                                          
               
                                                                                                      
             
 class sol_state:
     def __init__(self, board):
             self.board = board
-            self.number_of_iso = number_of_iso_pegs(board)
+            #self.number_of_iso = number_of_iso_pegs(board)
             self.number_moves = len(board_moves(board))
     def __lt__ (self,other):
             #return self.number_of_iso < other.number_of_iso
@@ -128,7 +128,7 @@ class solitaire(Problem):
             return board_moves(state.board)
         
         def result(self, state, action):
-            return board_perform_move(state.board, action)
+            return sol_state(board_perform_move(state.board, action))
             
         def goal_test(self, state):
             counter=0
@@ -136,7 +136,7 @@ class solitaire(Problem):
                 for j in range(0,len(state.board[i])):
                     if is_peg(state.board[i][j]):
                         counter+=1
-            if (counter==0):
+            if (counter==1):
                 return True
             else:
                 return False
@@ -147,6 +147,7 @@ class solitaire(Problem):
 
 
 
+#input do teste 25, nao esta a passar
+#print(xx_invalid_solution([["_","O","O","O","_"],["O","_","O","_","O"],["_","O","_","O","_"],["O","_","O","_","_"],["_","O","_","_","_"]],depth_first_tree_search(solitaire([["_","O","O","O","_"],["O","_","O","_","O"],["_","O","_","O","_"],["O","_","O","_","_"],["_","O","_","_","_"]]))))
 
-print(solitaire([["X","O","_","O","X"],["O","_","_","_","O"],["_","_","_","_","O"],["O","O","_","_","O"],["X","O","O","O","X"]]).result(sol_state([["X","O","_","O","X"],["O","_","_","_","O"],["_","_","_","_","O"],["O","O","_","_","O"],["X","O","O","O","X"]]),[(3, 0), (3, 2)]).board)
 
