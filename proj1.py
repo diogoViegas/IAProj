@@ -107,16 +107,34 @@ def board_perform_move(b1,pos):
                         #counter+=1
     #return res                                                                          
               
+def number_of_pegs(board):
+    count = 0
+    for i in range (0,len(board)):
+        for j in range (0,len(board[i])):
+            if is_peg(board[i][j]):
+                count += 1
+    return count
+              
+def number_of_stale_and_total_pegs(board):
+    checkedPos = []
+    pMoves = board_moves(board)
+    nPegs = number_of_pegs(board)
+    nStalePegs = nPegs
+    for i in range(0, len(pMoves)):
+        if not (pMoves[i][0] in checkedPos):
+            nStalePegs -= 1
+            checkedPos.append(pMoves[i][0])
+    return nStalePegs/nPegs
                                                                                                      
             
 class sol_state:
     def __init__(self, board):
             self.board = board
-            #self.number_of_iso = number_of_iso_pegs(board)
+            self.pegs_info = number_of_stale_and_total_pegs(board)
             self.number_moves = len(board_moves(board))
     def __lt__ (self,other):
             #return self.number_of_iso < other.number_of_iso
-            return self.number_moves > other.number_moves
+            return self.pegs_info < other.pegs_info
 
 class solitaire(Problem):
         #Models a Solitaire problem as a satisfaction problem.
@@ -136,13 +154,10 @@ class solitaire(Problem):
                 for j in range(0,len(state.board[i])):
                     if is_peg(state.board[i][j]):
                         counter+=1
-            if (counter==1):
-                return True
-            else:
-                return False
+            return counter==1
             
-        #def h(self, node):
-            #"""Needed for informed search.        
+        def h(self, node):
+            return node.state.pegs_info        
 
 
 
