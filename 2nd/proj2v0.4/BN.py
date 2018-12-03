@@ -5,7 +5,7 @@ Created on Mon Oct 15 15:51:49 2018
 @author: mlopes
 """
 import numpy as np
-from functools import reduce
+
 class Node():
     def __init__(self, prob, parents = []):
         self.prob=prob
