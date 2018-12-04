@@ -51,8 +51,7 @@ class BN():
 
         for j in range(0, counter):
             for l in range(0, len(index)):
-                aux[l]=int(auxstr[l])
-
+                aux[index[l]]=int(auxstr[l])
             res1+=self.computeJointProb(tuple(aux))
             auxstr = bin(int(auxstr, 2) + 1)[2:].zfill(counter)
 
@@ -60,7 +59,7 @@ class BN():
         aux[indexcalc]=0
         for j in range(0, counter):
             for l in range(0, len(index)):
-                aux[l]=int(auxstr[l])
+                aux[index[l]]=int(auxstr[l])
             res2+=self.computeJointProb(tuple(aux))
             auxstr = bin(int(auxstr, 2) - 1)[2:].zfill(counter)
 
