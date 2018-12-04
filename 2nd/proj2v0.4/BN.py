@@ -63,8 +63,8 @@ class BN():
             res2+=self.computeJointProb(tuple(aux))
             auxstr = bin(int(auxstr, 2) - 1)[2:].zfill(counter)
 
-
-        pass
+        alpha = 1/(res1 + res2)
+        return alpha*res1
         
     def computeJointProb(self, evid):
         aux = list(evid)
