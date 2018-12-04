@@ -51,8 +51,7 @@ class BN():
             for l in range(0, len(index)):
                 aux[l]=auxstr[l]
             res1+=self.computeJointProb(tuple(aux))
-            auxstr = bin(int(auxstr) + 1)[2:].zfill(counter) #esta perto mas ainda tem 1 problema
-            #experimenta na consola esta linha e ve 
+            auxstr = bin(int(auxstr, 2) + 1)[2:].zfill(counter) 
 
 
         pass
