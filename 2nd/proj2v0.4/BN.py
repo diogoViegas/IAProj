@@ -51,7 +51,8 @@ class BN():
 
         for j in range(0, counter):
             for l in range(0, len(index)):
-                aux[l]=auxstr[l]
+                aux[l]=int(auxstr[l])
+
             res1+=self.computeJointProb(tuple(aux))
             auxstr = bin(int(auxstr, 2) + 1)[2:].zfill(counter)
 
@@ -59,7 +60,7 @@ class BN():
         aux[indexcalc]=0
         for j in range(0, counter):
             for l in range(0, len(index)):
-                aux[l]=auxstr[l]
+                aux[l]=int(auxstr[l])
             res2+=self.computeJointProb(tuple(aux))
             auxstr = bin(int(auxstr, 2) - 1)[2:].zfill(counter)
 
@@ -99,3 +100,8 @@ print(p5.computeProb(ev))
 prob = [p1,p2,p3,p4,p5]
 bn = BN(gra,prob)
 print(bn.computeJointProb((0,0,1,1,1)))
+
+#testar a postprob
+#resultado esperado == 0.176
+ev1 = ([],-1,[],1,1)
+print(bn.computePostProb(ev1))
