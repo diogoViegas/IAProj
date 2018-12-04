@@ -39,6 +39,7 @@ class BN():
         auxstr = ''
         index=[]
         counter, res1, res2=0, 0, 0
+        indexcalc = 0
         for i in range(0, len(defaultlist)):
             if aux[i]==[]:
                 auxstr +=str(0)
@@ -46,12 +47,21 @@ class BN():
                 counter +=1
             if aux[i]==-1:
                 aux[i]=1
+                indexcalc=i
 
         for j in range(0, counter):
             for l in range(0, len(index)):
                 aux[l]=auxstr[l]
             res1+=self.computeJointProb(tuple(aux))
-            auxstr = bin(int(auxstr, 2) + 1)[2:].zfill(counter) 
+            auxstr = bin(int(auxstr, 2) + 1)[2:].zfill(counter)
+
+        aux=defaultlist
+        aux[indexcalc]=0
+        for j in range(0, counter):
+            for l in range(0, len(index)):
+                aux[l]=auxstr[l]
+            res2+=self.computeJointProb(tuple(aux))
+            auxstr = bin(int(auxstr, 2) - 1)[2:].zfill(counter)
 
 
         pass
