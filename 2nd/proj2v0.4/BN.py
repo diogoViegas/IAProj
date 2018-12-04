@@ -22,13 +22,6 @@ class Node():
         aux = ''
         aux1 = np.concatenate((self.prob[0], self.prob[1]), axis=None)  # arrays de arrays -> flatarray
         aux2 = list(evid)  # tuplo para lista para poder aceder ao index
-
-        #if (self.numberparent==1):   # se eu so tiver um pai
-        #    if aux2[self.parents[0]] ==1:
-        #        return [1-self.prob[1], self.prob[1]]
-        #    else:
-        #        return [1-self.prob[0], self.prob[0]]
-        # eu sou estupido, eu estou estupido, eu sou estupido
         
         for i in range(0, len(self.parents)) :
             aux+=str(aux2[self.parents[i]])    #string vai ter o valor em binario dos pais
@@ -41,6 +34,24 @@ class BN():
         self.prob = prob
 
     def computePostProb(self, evid):
+        defaultlist = list(evid)
+        aux= defaultlist
+        auxstr = ''
+        index=[]
+        counter, res1, res2=0, 0, 0
+        for i in range(0, len(defaultlist)):
+            if aux[i]==[]:
+                auxstr +=str(0)
+                index.append(i)
+                counter +=1
+            if aux[i]==-1:
+                aux[i]=1
+
+        for j in range(0, counter):
+            for l in range(0, len(index)):
+                aux[l]=auxstr[l]
+            res1+=self.computeJointProb(tuple(aux))
+            aux
 
 
         pass
