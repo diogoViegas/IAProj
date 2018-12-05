@@ -107,5 +107,5 @@ bn = BN(gra, prob)
 
 # testar a postprob
 # resultado esperado == 0.176
-ev1 = ([], -1, [], 1, 1)
+ev1 = ([], 0, 1, -1, [])
 print(bn.computePostProb(ev1))
