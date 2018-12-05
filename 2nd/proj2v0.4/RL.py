@@ -70,7 +70,7 @@ class finiteMDP:
             for i in range(0,len(trace)):
                 x=self.Q[int(trace[i][0])][int(trace[i][1])]
                 nQ[int(trace[i][0])][int(trace[i][1])] = x + self.alpha*(int(trace[i][3]) + self.gamma*(self.Q[int(trace[i][2])].max() - x))
-            err=np.linalg(self.Q - nQ)
+            err=np.linalg.norm(self.Q - nQ)
             self.Q = np.copy(nQ)
             if err<1e-7:
                 break
