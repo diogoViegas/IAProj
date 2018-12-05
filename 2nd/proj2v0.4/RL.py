@@ -16,6 +16,7 @@ class finiteMDP:
         self.nS = nS
         self.nA = nA
         self.gamma = gamma
+        self.alpha = 0.01
         self.Q = np.zeros((self.nS,self.nA))
         self.P = P
         self.R = R
@@ -30,6 +31,7 @@ class finiteMDP:
         J = 0
         for ii in range(0,n):
             a = self.policy(x,poltype,polpar)
+            print(a)
             r = self.R[x,a]
             y = np.nonzero(np.random.multinomial( 1, self.P[x,a,:]))[0][0]
             traj[ii,:] = np.array([x, a, y, r])
@@ -62,8 +64,16 @@ class finiteMDP:
 
             
     def traces2Q(self, trace):
-                # implementar esta funcao
-        
+        #trace = (estado inicial, acao, estado final, reward)
+        while True:
+            nQ = np.copy(self.Q)
+            for i in range(0,len(trace)):
+                x=self.Q[int(trace[i][0])][int(trace[i][1])]
+                nQ[int(trace[i][0])][int(trace[i][1])] = x + self.alpha*(int(trace[i][3]) + self.gamma*(self.Q[int(trace[i][2])].max() - x))
+            err=np.linalg(self.Q - nQ)
+            self.Q = np.copy(nQ)
+            if err<1e-7:
+                break
 
         return self.Q
     
@@ -71,17 +81,14 @@ class finiteMDP:
         # implementar esta funcao
         
         if poltype == 'exploitation':
-            pass
+            return int(self.Q[x].argmax())
 
             
         elif poltype == 'exploration':
-            pass
+            return int(self.Q[x][np.random.randint(0, self.nA)])
 
-                
-        return a
     
     def Q2pol(self, Q, eta=5):
         # implementar esta funcao
         return np.exp(eta*Q)/np.dot(np.exp(eta*Q),np.array([[1,1],[1,1]]))
 
-            
