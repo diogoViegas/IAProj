@@ -5,7 +5,7 @@ Created on Mon Oct 16 20:31:54 2017
 @author: mlopes
 """
 import numpy as np
-    import random
+import random
 
 from tempfile import TemporaryFile
 outfile = TemporaryFile()
@@ -62,7 +62,7 @@ class finiteMDP:
                     
         return self.Q,  self.Q2pol(self.Q)
 
-            #(estado inicial, ação, estado nal, recompensa)
+            
     def traces2Q(self, trace):
         #trace = (estado inicial, acao, estado final, reward)
         while True:
