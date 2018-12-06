@@ -65,7 +65,7 @@ class finiteMDP:
     def traces2Q(self, trace):
         #trace = (estado inicial, acao, estado final, reward)
         nQ = np.copy(self.Q)
-        while True:
+        for j in range(0, 1000):
             for i in range(0,len(trace)):
                 x = nQ[int(trace[i][0])][int(trace[i][1])]
                 z = nQ[int(trace[i][2])].max()
