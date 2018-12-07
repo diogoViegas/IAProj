@@ -1,3 +1,4 @@
+#87649-Diogo Viegas & 87635-Bernardo Santos - grupo 23
 # -*- coding: utf-8 -*-
 """
 Created on Mon Oct 16 20:31:54 2017
@@ -16,7 +17,7 @@ class finiteMDP:
         self.nS = nS
         self.nA = nA
         self.gamma = gamma
-        self.alpha = 0.01
+        self.alpha = 0.02
         self.Q = np.zeros((self.nS,self.nA))
         self.P = P
         self.R = R
@@ -58,14 +59,14 @@ class finiteMDP:
         self.V = np.max(self.Q,axis=1) 
         #correct for 2 equal actions
         self.Pol = np.argmax(self.Q, axis=1)
-                    
+
         return self.Q,  self.Q2pol(self.Q)
 
             
     def traces2Q(self, trace):
         #trace = (estado inicial, acao, estado final, reward)
         nQ = np.copy(self.Q)
-        for j in range(0, 1000):
+        for j in range(0, 10000):
             for i in range(0,len(trace)):
                 x = nQ[int(trace[i][0])][int(trace[i][1])]
                 z = nQ[int(trace[i][2])].max()

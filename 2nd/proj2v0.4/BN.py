@@ -1,3 +1,4 @@
+#87649-Diogo Viegas & 87635-Bernardo Santos - grupo 23
 # -*- coding: utf-8 -*-
 """
 Created on Mon Oct 15 15:51:49 2018

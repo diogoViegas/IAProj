@@ -38,7 +38,7 @@ for e1 in [0,1]:
                     jp.append(bn.computeJointProb((e1, e2, e3, e4, e5)))
 
 print("sum joint %.3f (1)" % sum(jp))
-
+#(B,E,A,J,M)
 ev = (-1,[],[],1,1)
 print("ev : ")
 print(ev)
